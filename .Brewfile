@@ -3,6 +3,8 @@ tap 'homebrew/bundle'
 tap 'homebrew/core'
 tap 'ldez/tap'
 tap 'buildpack/tap'
+tap 'versent/homebrew-taps'
+tap 'weaveworks/tap'
 
 # System tools
 brew 'gettext'
@@ -115,3 +117,8 @@ cask 'google-chrome'
 cask 'coconutbattery'
 cask 'firefox'
 cask 'open-in-code'
+
+#Amazon Web Services
+brew 'awscli'
+brew 'saml2aws'
+brew 'weaveworks/tap'
