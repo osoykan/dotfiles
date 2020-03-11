@@ -1,6 +1,8 @@
-export ZSH="/Users/osoykan/.oh-my-zsh"
-export GOPATH=/Users/osoykan/go
+export ZSH="$HOME/.oh-my-zsh"
+export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
+autoload -Uz compinit
+compinit
 DEFAULT_USER=$(whoami)
  
 ZSH_THEME="agnoster"
@@ -37,6 +39,9 @@ if command -v kubectl > /dev/null; then
 fi
 
 # fzf completion. run $HOMEBREW/opt/fzf/install to create the ~/.fzf.* script
+# brew install fzf
+# To install useful key bindings and fuzzy completion:
+# $(brew --prefix)/opt/fzf/install
 if type fzf &>/dev/null && [ -f ~/.fzf.zsh ]; then
 	source ~/.fzf.zsh
 else
@@ -45,18 +50,13 @@ fi
 
 # kubectl aliases from https://github.com/ahmetb/kubectl-alias
 #    > use sed to hijack --watch to watch $@.
-[ -f ~/.kubectl_aliases ] && source <(cat ~/.kubectl_aliases | sed -r 's/(kubectl.*) --watch/watch \1/g')
+[ -f ~/.kubectl_aliases ] && source \
+	<(cat ~/.kubectl_aliases | sed -E 's/(kubectl.*) --watch/watch\1/g')
 
 source /usr/local/share/antigen/antigen.zsh
 source $ZSH/oh-my-zsh.sh
  
 yadr=$HOME/.yadr
-
-# SUDO
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
