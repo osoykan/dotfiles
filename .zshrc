@@ -2,6 +2,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 autoload -Uz compinit
+autoload predict-on
 compinit
 DEFAULT_USER=$(whoami)
  
@@ -11,6 +12,10 @@ plugins=(
   git
   zsh-syntax-highlighting
   zsh-autosuggestions
+  z
+  command-not-found
+  history-substring-search
+  history
 )
 
 # Load custom functions
@@ -47,6 +52,8 @@ if type fzf &>/dev/null && [ -f ~/.fzf.zsh ]; then
 else
 	log "WARNING: skipping loading fzf.zsh"
 fi
+ 
+###
 
 # kubectl aliases from https://github.com/ahmetb/kubectl-alias
 #    > use sed to hijack --watch to watch $@.
