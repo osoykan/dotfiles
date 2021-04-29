@@ -1,16 +1,30 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
 export UPDATE_ZSH_DAYS=10
 export DISABLE_UPDATE_PROMPT=true # accept updates by default
 export EDITOR=vim
+export SBT_OPTS="-Xms1G -Xmx4G -Xss1M -Djava.net.preferIPv4Stack=true -Djavax.net.ssl.trustStore=cacerts -Djavax.net.ssl.trustStorePassword=changeit"
+export JAVA_HOME=$(/usr/libexec/java_home)
+export CLOUDSDK_PYTHON=python2
+export PATH=$GOPATH/bin:$PATH
+export PATH=$JAVA_HOME/jre/bin:$PATH
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 autoload -Uz compinit
 autoload predict-on
 compinit
 DEFAULT_USER=$(whoami)
- 
-ZSH_THEME="agnoster"
+
+zstyle :omz:plugins:ssh-agent identities id_rsa mendix
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(
   git
@@ -20,6 +34,7 @@ plugins=(
   command-not-found
   history-substring-search
   history
+  ssh-agent
 )
 
 # Load custom functions
@@ -43,30 +58,9 @@ else
   log "WARNING: skipping loading iterm2 shell integration"
 fi
 
-# kubectl completion (w/ refresh cache every 48-hours)
-if command -v kubectl > /dev/null; then
-	kcomp="$HOME/.kube/.zsh_completion"
-	if [ ! -f "$kcomp" ] ||  [ "$(( $(date +"%s") - $(stat -c "%Y" "$kcomp") ))" -gt "172800" ]; then
-		mkdir -p "$(dirname "$kcomp")"
-		kubectl completion zsh > "$kcomp"
-		log "refreshing kubectl zsh completion to $kcomp"
-	fi
-	source "$kcomp"
-fi
-
-# kubectl aliases from https://github.com/ahmetb/kubectl-alias
-#    > use sed to hijack --watch to watch $@.
-[ -f ~/.kubectl_aliases ] && source \
-	<(cat ~/.kubectl_aliases | sed -E 's/(kubectl.*) --watch/watch\1/g')
-
 source /usr/local/share/antigen/antigen.zsh
 source $ZSH/oh-my-zsh.sh
- 
 yadr=$HOME/.yadr
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # fzf completion. run $HOMEBREW/opt/fzf/install to create the ~/.fzf.* script
 # brew install fzf
@@ -77,3 +71,6 @@ if type fzf &>/dev/null && [ -f ~/.fzf.zsh ]; then
 else
 	log "WARNING: skipping loading fzf.zsh"
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
