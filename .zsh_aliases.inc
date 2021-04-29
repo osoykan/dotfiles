@@ -159,3 +159,7 @@ alias ze='emacsclient ~/.zshrc &'
 
 alias _='sudo'
 alias __='sudo !!'
+
+#goland 
+
+alias goland='/usr/local/bin/goland' 

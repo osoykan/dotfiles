@@ -22,7 +22,7 @@ autoload predict-on
 compinit
 DEFAULT_USER=$(whoami)
 
-zstyle :omz:plugins:ssh-agent identities id_rsa mendix
+zstyle :omz:plugins:ssh-agent identities id_rsa
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
