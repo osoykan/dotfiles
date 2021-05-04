@@ -10,6 +10,7 @@ for f in .zshrc \
 	.Brewfile \
 	.vimrc \
 	.gvimrc \
+	.p10k.zsh \
 	.editorconfig \
 	.github_username \
 	.gitignore_global \
