@@ -165,4 +165,4 @@ alias __='sudo !!'
 alias goland='/usr/local/bin/goland' 
 
 #go latest
-alias golat='go1.18rc1'
+alias go='go1.18rc1'
