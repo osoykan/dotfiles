@@ -81,6 +81,7 @@ brew 'fortio'
 brew 'pinentry-mac'
 brew 'gnupg'
 cask 'keybase'
+cask 'fig'
 
 # Containers
 brew 'kubernetes-cli'
